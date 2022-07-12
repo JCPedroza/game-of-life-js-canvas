@@ -1,6 +1,6 @@
-const buildSquare = () => ({
-  isOn: false,
-  neighbours: 0
+const buildSquare = (isOn = false, neighbours = 0) => ({
+  isOn,
+  neighbours
 })
 
 const buildRow = (len) =>
@@ -13,18 +13,20 @@ const canvas = document.getElementById('canvas')
 const context = canvas.getContext('2d')
 const { width, height } = canvas.getBoundingClientRect()
 
-const nRows = 8
-const nCols = 10
+const nRows = 4
+const nCols = 6
 const grid = buildGrid(nRows, nCols)
 
-const widthUnit = width / nCols
-const heightUnit = height / nRows
+const widthUnit = Math.trunc(width / nCols)
+const heightUnit = Math.trunc(height / nRows)
+const gridWidth = widthUnit * nCols
+const gridHeight = heightUnit * nRows
 
 const drawCols = () => {
   for (let col = 0; col <= nCols; col++) {
     context.beginPath()
     context.moveTo(col * widthUnit, 0)
-    context.lineTo(col * widthUnit, height)
+    context.lineTo(col * widthUnit, gridHeight)
     context.stroke()
   }
 }
@@ -32,13 +34,47 @@ const drawCols = () => {
 const drawRows = () => {
   for (let row = 0; row <= nRows; row++) {
     context.beginPath()
-    context.moveTo(0, row * widthUnit)
-    context.lineTo(width, row * widthUnit)
+    context.moveTo(0, row * heightUnit)
+    context.lineTo(gridWidth, row * heightUnit)
     context.stroke()
   }
 }
 
-drawCols()
-drawRows()
+const drawGrid = () => {
+  drawCols()
+  drawRows()
+}
 
-console.log(`widthUnit: ${widthUnit}, heightUnit: ${heightUnit}`)
+const initialize = () => {
+  drawGrid()
+  console.log(`width: ${width}, height: ${height}`)
+  console.log(grid)
+}
+
+initialize()
+
+const drawSquare = (context, row, col) =>
+  context.fillRect(col * widthUnit, row * heightUnit, widthUnit, heightUnit)
+
+const clearSquare = (context, row, col) =>
+  context.clearRect(col * widthUnit, row * heightUnit, widthUnit, heightUnit)
+
+const toggleSquare = (grid, row, col) => {
+  grid[row][col].isOn = !grid[row][col].isOn
+  if (grid[row][col].isOn) drawSquare(context, row, col)
+  else clearSquare(context, row, col)
+}
+
+const onCanvasClick = (event) => {
+  const row = Math.trunc(event.layerY / heightUnit)
+  const col = Math.trunc(event.layerX / widthUnit)
+
+  toggleSquare(grid, row, col)
+  drawGrid()
+
+  console.log(event)
+  console.log(`row: ${row}, col: ${col}`)
+  console.log()
+}
+
+canvas.onclick = onCanvasClick

@@ -49,9 +49,6 @@ export class Grid {
     this.matrix = makeMatrix(nRows, nCols)
     this.rows = nRows
     this.cols = nCols
-
-    console.log(`${this.matrix.length} grows`)
-    console.log(`${this.matrix[0].length} gcols`)
   }
 
   /**
@@ -62,7 +59,6 @@ export class Grid {
   toggle (row, col) {
     this.matrix[row][col].isOn = !this.matrix[row][col].isOn
     const neighbors = this.neighborsOf(row, col)
-    console.log(neighbors)
 
     if (this.matrix[row][col].isOn) {
       neighbors.forEach(([row, col]) => {

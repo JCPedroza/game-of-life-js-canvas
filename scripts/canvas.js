@@ -114,7 +114,6 @@ export class Canvas {
     const cell = this.grid.toggle(row, col)
     if (cell.isOn) this.drawCell(row, col)
     else this.clearCell(row, col)
-    console.log(cell)
 
     this.drawGrid()
   }

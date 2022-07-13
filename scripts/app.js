@@ -19,6 +19,16 @@ export class App {
     window.onclick = this.onOutsideClick.bind(this)
     this.close.onclick = this.onClose.bind(this)
     this.apply.onclick = this.onApply.bind(this)
+
+    document.addEventListener('keypress', (event) => {
+      if (event.key === 'o' || event.key === 'c') {
+        if (this.modal.style.display === 'none') {
+          this.modal.style.display = 'block'
+        } else {
+          this.modal.style.display = 'none'
+        }
+      }
+    })
   }
 
   onClose () {

@@ -1,8 +1,3 @@
-import { Grid } from './grid.js'
-import { Canvas } from './canvas.js'
+import { App } from './app.js'
 
-const rows = 4
-const cols = 6
-
-const grid = new Grid(rows, cols)
-const canvas = new Canvas(rows, cols, grid)
+const app = new App()

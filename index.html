@@ -10,6 +10,27 @@
   </head>
 
   <body>
+    <div id="modal" class="modal">
+      <div class="config">
+        <span id="close" class="close">&times;</span>
+        <form id="form" class="form">
+          <div class="form-input-text">
+            <label for="rows">rows</label>
+            <input type="text" id="rows" name="rows" autofocus>
+          </div>
+
+          <div class="form-input-text">
+            <label for="cols">columns</label>
+            <input type="text" id="cols" name="cols">
+          </div>
+
+          <div class="form-apply-btn">
+            <button type="button" id="apply" class="apply">Apply</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <canvas id="canvas"></canvas>
   </body>
 

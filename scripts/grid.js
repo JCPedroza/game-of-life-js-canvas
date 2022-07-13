@@ -14,8 +14,15 @@ const makeCell = (isOn = false, neighbors = 0) => ({
  * @param {number} len Row length (number of cells).
  * @returns {Object[]} Array of cells.
  */
-const makeRow = (len) =>
-  [...Array(len)].map(_ => makeCell())
+const makeRow = (len) => {
+  const row = []
+
+  for (let index = 0; index < len; index++) {
+    row.push(makeCell())
+  }
+
+  return row
+}
 
 /**
  * Create a matrix of cell objects.
@@ -23,8 +30,15 @@ const makeRow = (len) =>
  * @param {number} nCols Number of columns.
  * @returns {Object[][]} A 2d array of cell objects.
  */
-const makeMatrix = (nRows, nCols) =>
-  [...Array(nRows)].map(_ => makeRow(nCols))
+const makeMatrix = (nRows, nCols) => {
+  const matrix = []
+
+  for (let row = 0; row < nRows; row++) {
+    matrix.push(makeRow(nCols))
+  }
+
+  return matrix
+}
 
 /**
  * Represents a grid (matrix, 2d array) whose cells can be toggled on / off
@@ -33,7 +47,6 @@ const makeMatrix = (nRows, nCols) =>
 export class Grid {
   constructor (nRows, nCols) {
     this.matrix = makeMatrix(nRows, nCols)
-    this.toggleSubs = []
   }
 
   /**

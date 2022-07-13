@@ -115,7 +115,24 @@ export class Canvas {
     if (cell.isOn) this.drawCell(row, col)
     else this.clearCell(row, col)
 
+    console.log(
+      cell,
+      `willTurnOff: ${cell.willTurnOff()}`,
+      `willTurnOn: ${cell.willTurnOn()}`
+    )
+
     this.drawGrid()
+  }
+
+  onNextState () {
+    this
+      .grid
+      .nextMove()
+      .forEach(([row, col]) => {
+        const cell = this.grid.toggle(row, col)
+        if (cell.isOn) this.drawCell(row, col)
+        else this.clearCell(row, col)
+      })
   }
 }
 

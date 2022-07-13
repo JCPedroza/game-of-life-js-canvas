@@ -1,7 +1,7 @@
 import { Grid } from './grid.js'
 import { Canvas } from './canvas.js'
 
-export class App {
+export class Game {
   constructor (rows = 4, cols = 4) {
     this.rows = rows
     this.cols = cols
@@ -27,6 +27,8 @@ export class App {
         } else {
           this.modal.style.display = 'none'
         }
+      } else if (event.key === 'n') {
+        this.canvas.onNextState()
       }
     })
   }
@@ -51,5 +53,5 @@ export class App {
 }
 
 export default {
-  App
+  Game
 }

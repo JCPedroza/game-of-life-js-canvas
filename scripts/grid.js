@@ -1,13 +1,17 @@
-/**
- * Create a cell that represents a location in a grid / matrix.
- * @param {boolean} isOn Is the cell alive?
- * @param {number} neighbors Number of alive neighbors.
- * @returns {Object} A cell object.
- */
-const makeCell = (isOn = false, neighbors = 0) => ({
-  isOn,
-  neighbors
-})
+class Cell {
+  constructor (isOn = false, neighbors = 0) {
+    this.isOn = isOn
+    this.neighbors = neighbors
+  }
+
+  willTurnOff () {
+    return this.isOn && this.neighbors !== 2 && this.neighbors !== 3
+  }
+
+  willTurnOn () {
+    return !this.isOn && this.neighbors === 3
+  }
+}
 
 /**
  * Create an array of cells (a row in a matrix).
@@ -18,7 +22,7 @@ const makeRow = (len) => {
   const row = []
 
   for (let index = 0; index < len; index++) {
-    row.push(makeCell())
+    row.push(new Cell())
   }
 
   return row
@@ -91,6 +95,23 @@ export class Grid {
         col >= 0 &&
         col < this.cols
     })
+  }
+
+  nextMove () {
+    const cellsToToggle = []
+
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        if (
+          this.matrix[row][col].willTurnOn() ||
+          this.matrix[row][col].willTurnOff()
+        ) {
+          cellsToToggle.push([row, col])
+        }
+      }
+    }
+
+    return cellsToToggle
   }
 }
 

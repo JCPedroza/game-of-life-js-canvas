@@ -5,7 +5,8 @@ export class App {
   constructor (rows = 4, cols = 4) {
     this.rows = rows
     this.cols = cols
-    this.grid = new Grid(cols, rows)
+    this.grid = new Grid(rows, cols)
+
     this.canvas = new Canvas(rows, cols, this.grid)
 
     this.modal = document.getElementById('modal')

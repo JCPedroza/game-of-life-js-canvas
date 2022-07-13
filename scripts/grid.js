@@ -47,6 +47,11 @@ const makeMatrix = (nRows, nCols) => {
 export class Grid {
   constructor (nRows, nCols) {
     this.matrix = makeMatrix(nRows, nCols)
+    this.rows = nRows
+    this.cols = nCols
+
+    console.log(`${this.matrix.length} grows`)
+    console.log(`${this.matrix[0].length} gcols`)
   }
 
   /**
@@ -56,7 +61,40 @@ export class Grid {
    */
   toggle (row, col) {
     this.matrix[row][col].isOn = !this.matrix[row][col].isOn
+    const neighbors = this.neighborsOf(row, col)
+    console.log(neighbors)
+
+    if (this.matrix[row][col].isOn) {
+      neighbors.forEach(([row, col]) => {
+        this.matrix[row][col].neighbors++
+      })
+    } else {
+      neighbors.forEach(([row, col]) => {
+        this.matrix[row][col].neighbors--
+      })
+    }
+
     return this.matrix[row][col]
+  }
+
+  neighborsOf (row, col) {
+    const neighbors = [
+      [row - 1, col - 1],
+      [row - 1, col],
+      [row - 1, col + 1],
+      [row, col + 1],
+      [row + 1, col + 1],
+      [row + 1, col],
+      [row + 1, col - 1],
+      [row, col - 1]
+    ]
+
+    return neighbors.filter(([row, col]) => {
+      return row >= 0 &&
+        row < this.rows &&
+        col >= 0 &&
+        col < this.cols
+    })
   }
 }
 
